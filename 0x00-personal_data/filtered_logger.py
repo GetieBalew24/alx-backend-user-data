@@ -60,3 +60,18 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(RedactingFormatter(PII_FIELDS))
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """ connect to a secure holberton database to read a users table.
+    """
+    DB_user = os.environ.get('PERSONAL_DATA_DB_USERNAME', "root")
+    DB_password = os.environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    DB_host_name = os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost')
+    DB_name = os.environ.get('PERSONAL_DATA_DB_NAME')
+    connection = mysql.connector.connect(
+        host=DB_host_name,
+        database=DB_name,
+        user=DB_user,
+        password=DB_password)
+    return connection
