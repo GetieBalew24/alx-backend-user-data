@@ -46,7 +46,7 @@ class BasicAuth(Auth):
         return decoded
 
     def extract_user_credentials(self,
-                    decoded_base64_authorization_header: str
+                                 decoded_base64_authorization_header: str
                                  ) -> (str, str):
         """
         Returns the user email and password from the
@@ -90,11 +90,27 @@ class BasicAuth(Auth):
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """
-        overloads Auth and retrieves the User instance for a request
-        """
-        header = self.authorization_header(request)
-        b64header = self.extract_base64_authorization_header(header)
-        decoded = self.decode_base64_authorization_header(b64header)
-        user_creds = self.extract_user_credentials(decoded)
-        return self.user_object_from_credentials(*user_creds)
+        """ overloads Auth and retrieves the User instance for a request """
+        auth_header = self.authorization_header(request)
+
+        if not auth_header:
+            return None
+
+        encoded = self.extract_base64_authorization_header(auth_header)
+
+        if not encoded:
+            return None
+
+        decoded = self.decode_base64_authorization_header(encoded)
+
+        if not decoded:
+            return None
+
+        email, pwd = self.extract_user_credentials(decoded)
+
+        if not email or not pwd:
+            return None
+
+        user = self.user_object_from_credentials(email, pwd)
+
+        return user
