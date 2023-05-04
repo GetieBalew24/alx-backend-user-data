@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-""" User session module
+""" User session
 """
 from models.base import Base
 
 
 class UserSession(Base):
-    """User Session Class
+    """User Session 
     """
 
     def __init__(self, *args: list, **kwargs: dict):
-        """Constructor Method"""
+        """Constructor"""
         super().__init__(*args, **kwargs)
         self.user_id = kwargs.get('user_id')
         self.session_id = kwargs.get('session_id')
