@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Module of Session authentication views
+""" Session authentication 
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
@@ -24,28 +24,28 @@ def login():
         return jsonify({"error": "password missing"}), 400
 
     try:
-        found_users = User.search({'email': email})
+        search_users = User.search({'email': email})
     except Exception:
         return jsonify({"error": "no user found for this email"}), 404
 
-    if not found_users:
+    if not search_users:
         return jsonify({"error": "no user found for this email"}), 404
 
-    for user in found_users:
+    for user in search_users:
         if not user.is_valid_password(password):
             return jsonify({"error": "wrong password"}), 401
 
     from api.v1.app import auth
 
-    user = found_users[0]
+    user = search_users[0]
     session_id = auth.create_session(user.id)
 
     SESSION_NAME = getenv("SESSION_NAME")
 
-    response = jsonify(user.to_json())
-    response.set_cookie(SESSION_NAME, session_id)
+    response_session = jsonify(user.to_json())
+    response_session.set_cookie(SESSION_NAME, session_id)
 
-    return response
+    return response_session
 
 
 @app_views.route('/auth_session/logout',
@@ -57,9 +57,9 @@ def logout():
     """
     from api.v1.app import auth
 
-    deleted = auth.destroy_session(request)
+    delete_session= auth.destroy_session(request)
 
-    if not deleted:
+    if not delete_session:
         abort(404)
 
     return jsonify({}), 200
