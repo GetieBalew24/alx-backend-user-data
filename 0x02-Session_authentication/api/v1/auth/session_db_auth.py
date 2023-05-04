@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Module of Session in Database
+"""  Session in Database
 """
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from datetime import datetime, timedelta
@@ -7,10 +7,10 @@ from models.user_session import UserSession
 
 
 class SessionDBAuth(SessionExpAuth):
-    """Session in database Class"""
+    """Session for database Class"""
 
     def create_session(self, user_id=None):
-        """Creation session database"""
+        """Create a session db"""
         session_id = super().create_session(user_id)
 
         if session_id is None:
@@ -24,7 +24,7 @@ class SessionDBAuth(SessionExpAuth):
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
-        """User ID for Session ID Database"""
+        """Session ID Database"""
         if session_id is None:
             return None
 
@@ -47,7 +47,7 @@ class SessionDBAuth(SessionExpAuth):
         return user_session.user_id
 
     def destroy_session(self, request=None):
-        """Remove Session from Database"""
+        """Delete Session"""
         if request is None:
             return False
 
