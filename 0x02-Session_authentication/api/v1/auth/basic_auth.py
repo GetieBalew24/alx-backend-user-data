@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Basic Authentication
+""" Module of Basic Authentication
 """
 from api.v1.auth.auth import Auth
 from base64 import b64decode
@@ -8,7 +8,7 @@ from typing import TypeVar
 
 
 class BasicAuth(Auth):
-    """ Authentication Class """
+    """ Basic Authentication Class """
 
     def extract_base64_authorization_header(self,
                                             authorization_header: str) -> str:
@@ -50,7 +50,7 @@ class BasicAuth(Auth):
                                  ) -> (str, str):
         """
         Returns the user email and password from the
-        Base64 decoded valueil and password from the
+        Base64 decoded value
         """
 
         if decoded_base64_authorization_header is None:
