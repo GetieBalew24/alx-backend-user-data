@@ -1,11 +1,19 @@
 """DB module
 """
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, tuple_
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.session import Session
 
-from user import Base, User
+from user import Base
+from user import User
+from typing import TypeVar
+
+VALID_FIELDS = ['id', 'email', 'hashed_password', 'session_id',
+                'reset_token']
+
 
 
 class DB:
@@ -30,13 +38,15 @@ class DB:
         return self.__session
     
     def add_user(self, email: str, hashed_password: str) -> User:
-        """Adds users to the database.
         """
-        try:
-            user = User(email=email, hashed_password=hashed_password)
-            self._session.add(user)
-            self._session.commit()
-        except Exception:
-            self._session.rollback()
-            user = None
+        add_user.
+        """
+        if not email or not hashed_password:
+            return
+        user = User(email=email, hashed_password=hashed_password)
+        session = self._session
+        session.add(user)
+        session.commit()
         return user
+    
+   
