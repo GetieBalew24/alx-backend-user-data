@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A simple Flask app with user authentication features.
+"""Flask app with user authentication.
 """
 from flask import Flask, jsonify, request, abort, redirect
 
@@ -17,7 +17,6 @@ def index() -> str:
         - The home page's payload.
     """
     return jsonify({"message": "Bienvenue"})
-
 
 @app.route("/users", methods=["POST"], strict_slashes=False)
 def users() -> str:

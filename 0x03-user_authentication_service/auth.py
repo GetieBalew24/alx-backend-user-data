@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A module for authentication-related routines.
+"""authentication-related routines.
 """
 import bcrypt
 from uuid import uuid4
@@ -11,28 +11,28 @@ from user import User
 
 
 def _hash_password(password: str) -> bytes:
-    """Hashes a password.
+    """Hashes a password function.
     """
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
 
 def _generate_uuid() -> str:
-    """Generates a UUID.
+    """Generates a UUID function.
     """
     return str(uuid4())
 
 
 class Auth:
-    """Auth class to interact with the authentication database.
+    """Auth class to interact authentication database.
     """
 
     def __init__(self):
-        """Initializes a new Auth instance.
+        """Initializes Auth.
         """
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> User:
-        """Adds a new user to the database.
+        """register user to the database.
         """
         try:
             self._db.find_user_by(email=email)
@@ -41,7 +41,7 @@ class Auth:
         raise ValueError("User {} already exists".format(email))
 
     def valid_login(self, email: str, password: str) -> bool:
-        """Checks if a user's login details are valid.
+        """Checks a user's login details are valid.
         """
         user = None
         try:
@@ -56,7 +56,7 @@ class Auth:
         return False
 
     def create_session(self, email: str) -> str:
-        """Creates a new session for a user.
+        """Creates a session for a user.
         """
         user = None
         try:
